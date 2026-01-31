@@ -80,8 +80,39 @@ const rules = {
 const errors = validate(data, rules);
 console.log(errors);
 
-
 ```
+
+
+
+## Supported Rules
+
+### General
+| Rule             | Description |
+|-----------------|-------------|
+| `required`       | Field must not be empty |
+| `string`         | Field must be a string |
+| `boolean`        | Field must be a boolean |
+| `numeric`        | Field must be a number |
+| `min:value`      | Minimum string length |
+| `max:value`      | Maximum string length |
+| `min_value:value`| Minimum numeric value |
+| `max_value:value`| Maximum numeric value |
+| `email`          | Must be a valid email |
+| `url`            | Must be a valid URL |
+| `alpha`          | Only letters |
+| `alpha_num`      | Letters and numbers only |
+| `phone`          | Valid phone number (+98 or 09xxxxxxxxx) |
+| `date`           | Must match YYYY-MM-DD |
+| `regex:pattern`  | Custom regex validation |
+| `confirmed:field`| Value must match another field (e.g., password_confirmation) |
+
+### File Rules
+| Rule             | Description |
+|-----------------|-------------|
+| `file_required`  | File must be uploaded |
+| `mimes:ext1,ext2`| File must be one of allowed extensions (jpg,png,gif, etc.) |
+| `max_size:value` | Maximum file size in bytes |
+
 
 
 
