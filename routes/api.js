@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { validate } = require('../core/helper');
-
+const UserModel = require('../models/User');
 
 router.post("/post", (req, res) => {
     const rules = {
@@ -14,8 +14,14 @@ router.post("/post", (req, res) => {
     if (errors) return res.status(400).json({ errors });
 
     res.send(req.body);
-
-    
 });
+
+router.get('/users', async (req, res) => {
+    let users = await UserModel.all();
+    res.send(users);
+})
+
+
+
 
 module.exports = router;
