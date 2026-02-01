@@ -115,6 +115,144 @@ console.log(errors);
 
 
 
+# Nexon.js ORM
+
+A lightweight ORM inspired by Laravel Eloquent, built for Nexon.js.  
+Supports Models, basic CRUD operations, and chainable queries using Knex.
+
+---
+
+## Features
+
+- Define models as JavaScript classes
+- Simple CRUD:
+  - `all()`, `find(id)`, `create(data)`, `update(id, data)`, `delete(id)`
+- Chainable queries:
+  - `where()`, `limit()`, `orderBy()`, `get()`, `first()`
+- Uses Knex for database connection
+- Easy to extend (relations, timestamps, soft deletes, etc.)
+
+
+
+
+## Database Configuration
+
+First, configure your database connection in:
+
+`config/database.js`
+
+```js
+const knex = require('knex');
+
+const db = knex({
+    client: 'mysql2', // or 'pg', 'sqlite3'
+    connection: {
+        host: 'localhost',
+        user: 'root',
+        password: '',
+        database: 'nexon_db'
+    }
+});
+
+module.exports = db;
+
+
+```
+
+---
+
+
+### Creating a Model
+
+
+Example: models/User.js
+
+
+```js
+const Model = require('../core/orm/Model');
+
+class User extends Model {
+    static get table() {
+        return 'users';
+    }
+}
+
+module.exports = User;
+
+```
+
+
+
+### Basic Usage
+
+
+Import your model:
+
+```js
+const User = require('./models/User');
+
+// All
+const users = await User.all();
+
+// Find by ID
+const user = await User.find(1);
+
+
+
+// Create a new record
+
+await User.create({
+    name: 'Reza',
+    email: 'reza@example.com'
+});
+
+// Update a record
+await User.update(1, {
+    name: 'New Name'
+});
+
+
+// Delete a record
+await User.delete(1);
+
+
+```
+
+### Query Builder (Chainable Queries)
+
+You can build queries like this:
+
+```js
+const users = await User
+    .where('id', '>', 5)
+    .orderBy('id', 'desc')
+    .limit(10)
+    .get();
+```
+
+#### Get first result
+
+
+```js
+const user = await User
+    .where('email', 'reza@example.com')
+    .first();
+```
+
+
+### Using in Routes (Example)
+
+
+```js
+router.get('/users', async (req, res) => {
+    const users = await User.all();
+    res.send(users);
+});
+```
+
+Note: When using await, your route handler must be async.
+
+
 
 
 
